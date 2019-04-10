@@ -2,19 +2,20 @@
   "name": "art-slack",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/bin/slack.js",
   "bin": {
-    "hexlet": "dist/bin/hexlet.js"
+    "hexlet": "dist/bin/slack.js"
   },
   "engines": {
-    "node": "9"
+    "node": "10"
   },
   "scripts": {
     "test": "jest",
     "build-server": "babel server --out-dir dist --source-maps inline",
     "build-app": "npx webpack -p --env production",
     "build": "npm run build-app && npm run build-server",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "start": "node dist/bin/slack.js"
   },
   "repository": {
     "type": "git",
