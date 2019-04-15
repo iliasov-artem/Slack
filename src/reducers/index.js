@@ -3,13 +3,13 @@ import { handleActions } from 'redux-actions';
 import * as actions from '../actions';
 
 const channels = handleActions({
-  [actions.addChannel](state, { payload: { channels } }) {
+  [actions.addChannel](state) {
     return state;
   },
 }, { byId: {}, allIds: [] });
 
 const messages = handleActions({
-  [actions.addMessage](state, { payload: { messages } }) {
+  [actions.addMessage](state) {
     return state;
   },
 }, { byId: {}, allIds: [] });
