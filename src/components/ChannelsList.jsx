@@ -11,7 +11,6 @@ export default class ChannelsList extends React.Component {
 
   render() {
     const { channels, user } = this.props;
-    console.log(this.props);
     return (
       <div className="px-3 bg-secondary text-white">
         <div className="team_menu">

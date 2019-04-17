@@ -1,27 +1,25 @@
 import React from 'react';
+import { reduxForm, Field } from 'redux-form';
+import connect from '../connect';
+
+@connect()
 
 class SendMessageForm extends React.Component {
-  state = { text: '' };
-
-  sendMessage = (e) => {
-    e.preventDefault();
-    console.log(1);
-  }
-
-  changeText = ({ target: { value } }) => {
-    console.log(value);
-    this.setState({ text: value });
+  sendMessage = async ({ message }) => {
+    const { sendMessage, reset, currentChannelId } = this.props;
+    await sendMessage(message, currentChannelId);
+    reset();
   }
 
   render() {
-    const { text } = this.state;
+    const { handleSubmit } = this.props;
     return (
       <div className="container-fluid">
-        <form className="form-inline" onSubmit={this.sendMessage}>
+        <form className="form-inline" onSubmit={handleSubmit(this.sendMessage)}>
           <div className="input-group mb-3">
-            <input type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+            <Field name="message" required placeholder="message" component="input" type="text" />
             <div className="input-group-append">
-              <button className="btn btn-outline-secondary" type="button">Button</button>
+              <button className="btn btn-outline-secondary" type="submit">Button</button>
             </div>
           </div>
         </form>
@@ -30,4 +28,6 @@ class SendMessageForm extends React.Component {
   }
 }
 
-export default SendMessageForm;
+export default reduxForm({
+  form: 'newMessage',
+})(SendMessageForm);

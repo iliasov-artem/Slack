@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/application.css';
+import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import faker from 'faker';
@@ -7,8 +8,9 @@ import gon from 'gon';
 import cookies from 'js-cookie';
 // import io from 'socket.io-client';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers';
 import App from './components/App';
 import Context from './context';
@@ -40,7 +42,6 @@ const renderDefaultStoreChannels = (channels) => {
 
 const username = getName();
 const { channels } = gon;
-
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   reducers, /* preloadedState, */
@@ -49,10 +50,9 @@ const store = createStore(
     messages: { byId: {}, allIds: [] },
     currentChannelId: gon.currentChannelId,
   },
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  composeWithDevTools(applyMiddleware(thunk)),
 );
 /* eslint-enable */
-console.log(gon);
 ReactDOM.render(
   <Provider store={store}>
     <Context.Provider value={username}>
