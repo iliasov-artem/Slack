@@ -6,8 +6,8 @@ import connect from '../connect';
 
 class SendMessageForm extends React.Component {
   sendMessage = async ({ message }) => {
-    const { sendMessage, reset, currentChannelId } = this.props;
-    await sendMessage(message, currentChannelId);
+    const { sendMessage, reset, currentChannelId, user } = this.props;
+    await sendMessage(message, currentChannelId, user);
     reset();
   }
 
