@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import faker from 'faker';
 import gon from 'gon';
 import cookies from 'js-cookie';
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -14,6 +14,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers';
 import App from './components/App';
 import Context from './context';
+import * as actions from './actions';
 
 const getRandomUsername = () => {
   const name = faker.name.findName();
@@ -52,6 +53,13 @@ const store = createStore(
   },
   composeWithDevTools(applyMiddleware(thunk)),
 );
+
+const socket = io();
+socket.on('newMessage', (payload) => {
+  console.log(payload);
+  store.dispatch(actions.addMessage(payload));
+});
+
 /* eslint-enable */
 ReactDOM.render(
   <Provider store={store}>

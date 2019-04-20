@@ -14,6 +14,7 @@ export const sendMessage = (message, channelId, user) => async (dispatch) => {
       user,
     },
   };
-  const response = await axios.post(path, { data });
-  dispatch(addMessage(response));
+  await axios.post(path, { data });
+  //const response = await axios.post(path, { data });
+  //dispatch(addMessage(response));
 };

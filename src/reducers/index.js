@@ -11,15 +11,13 @@ const channels = handleActions({
 
 const messages = handleActions({
   [actions.addMessage](state, { payload }) {
+    const { data: { attributes } } = payload;
     const {
-      data: {
-        data: {
-          attributes: {
-            id, message, channelId, user,
-          },
-        },
-      },
-    } = payload;
+      message,
+      id,
+      channelId,
+      user,
+    } = attributes;
     const newMessage = {
       id, message, channelId, user,
     };
