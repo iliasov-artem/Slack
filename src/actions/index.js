@@ -6,7 +6,7 @@ export const addChannel = createAction('ADD_CHANNEL');
 export const addMessage = createAction('ADD_MESSAGE');
 export const setActiveChannel = createAction('SET_ACTIVE_CHANNEL');
 
-export const sendMessage = (message, channelId, user) => async (dispatch) => {
+export const sendMessage = (message, channelId, user) => async () => {
   const path = messages(channelId);
   const data = {
     attributes: {
@@ -15,6 +15,4 @@ export const sendMessage = (message, channelId, user) => async (dispatch) => {
     },
   };
   await axios.post(path, { data });
-  //const response = await axios.post(path, { data });
-  //dispatch(addMessage(response));
 };
