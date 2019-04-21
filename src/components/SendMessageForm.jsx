@@ -1,5 +1,8 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
+import connect from '../connect';
+
+@connect()
 
 class SendMessageForm extends React.Component {
   sendMessage = async ({ message }) => {

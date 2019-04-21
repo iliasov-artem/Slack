@@ -56,9 +56,11 @@ const store = createStore(
 
 const socket = io();
 socket.on('newMessage', (payload) => {
-  console.log(payload);
   store.dispatch(actions.addMessage(payload));
-});
+}); /*
+socket.on('createChannel', (payload) => {
+  store.dispatch(actions.addChannel(payload));
+}); */
 
 /* eslint-enable */
 ReactDOM.render(

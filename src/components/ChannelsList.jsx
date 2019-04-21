@@ -1,4 +1,5 @@
 import React from 'react';
+import AddChannelForm from '../modals/AddChannelForm';
 
 export default class ChannelsList extends React.Component {
   renderChannels = channels => (
@@ -14,15 +15,15 @@ export default class ChannelsList extends React.Component {
     return (
       <div className="px-3 bg-secondary text-white">
         <div className="team_menu">
-          <p className="text-center">Team Menu</p>
-          <p>{user}</p>
+          <button className="btn btn-secondary btn-block m-0" type="button">
+            Team menu
+          </button>
+          <p className="m-0">{user}</p>
         </div>
         <div className="col_channels center">
           <h3>Channels</h3>
           {this.renderChannels(channels)}
-          <button type="button" className="btn btn-secondary btn-block">
-            add channel +
-          </button>
+          <AddChannelForm />
         </div>
       </div>
     );
