@@ -16,12 +16,12 @@ const renderMessages = (messages, currentChannelId) => {
   );
 };
 
-const MainWindow = ({ messages, currentChannelId }) => (
+const MainWindow = ({ messages, currentChannelId, currentChannelName }) => (
   <div className="col">
     <div className="container-fluid d-flex flex-column h-100">
       <div className="row flex-shrink-0">
         <div className="col py-2">
-          <h5 className="mb-0">Header</h5>
+          <h5 className="mb-0">{currentChannelName}</h5>
         </div>
       </div>
       <div className="row flex-fill d-flex flex-column justify-content-start overflow-auto">

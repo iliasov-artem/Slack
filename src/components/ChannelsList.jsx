@@ -1,10 +1,18 @@
 import React from 'react';
 import AddChannelForm from '../modals/AddChannelForm';
+import connect from '../connect';
 
-export default class ChannelsList extends React.Component {
+@connect()
+
+class ChannelsList extends React.Component {
+  handleSetActiveChannel = id => () => {
+    const { setActiveChannel } = this.props;
+    setActiveChannel(id);
+  }
+
   renderChannels = channels => (
     channels.map(({ id, name }) => (
-      <button key={id} type="button" className="btn btn-secondary btn-block">
+      <button key={id} type="button" className="btn btn-secondary btn-block" onClick={this.handleSetActiveChannel(id)}>
         {`#${name}`}
       </button>
     ))
@@ -29,3 +37,5 @@ export default class ChannelsList extends React.Component {
     );
   }
 }
+
+export default ChannelsList;

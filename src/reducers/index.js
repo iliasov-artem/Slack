@@ -33,8 +33,8 @@ const messages = handleActions({
 }, { byId: {}, allIds: [] });
 
 const currentChannelId = handleActions({
-  [actions.setActiveChannel](state) {
-    return state;
+  [actions.setActiveChannel](state, { payload }) {
+    return payload;
   },
 }, 1);
 
