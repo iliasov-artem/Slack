@@ -1,10 +1,17 @@
 import { createAction } from 'redux-actions';
 import axios from 'axios';
-import { messages, channels } from '../routes';
+import { messages, channels, channel } from '../routes';
 
-export const addChannel = createAction('ADD_CHANNEL');
-export const addMessage = createAction('ADD_MESSAGE');
+export const addChannel = createAction('CHANNEL_ADD');
+export const addMessage = createAction('MESSAGE_ADD');
 export const setActiveChannel = createAction('SET_ACTIVE_CHANNEL');
+export const deleteChannel = createAction('CHANNEL_DELETE');
+
+export const deleteChannelRequest = channelId => async (dispatch) => {
+  const path = channel(channelId);
+  await axios.delete(path);
+  dispatch(deleteChannel(channelId));
+};
 
 export const sendMessage = (message, channelId, user) => async () => {
   const path = messages(channelId);

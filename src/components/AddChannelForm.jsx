@@ -3,6 +3,8 @@ import { reduxForm, Field } from 'redux-form';
 import { Modal, Button } from 'react-bootstrap';
 import connect from '../connect';
 
+
+@reduxForm({ form: 'newChannel' })
 @connect()
 
 class AddChannelForm extends React.Component {
@@ -38,11 +40,11 @@ class AddChannelForm extends React.Component {
             <Modal.Title>Add Channel</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form className="form-inline" onSubmit={handleSubmit(this.createChannel)}>
+            <form onSubmit={handleSubmit(this.createChannel)}>
               <div className="input-group mb-3">
-                <Field name="channel" required placeholder="message" component="input" type="text" />
+                <Field name="channel" placeholder="please enter the channel name" component="input" type="text" />
                 <div className="input-group-append">
-                  <button className="btn btn-outline-secondary" disabled={submitting} type="submit">Button</button>
+                  <button className="btn btn-outline-secondary" disabled={submitting} type="submit">Add Channel</button>
                 </div>
               </div>
             </form>
@@ -56,6 +58,4 @@ class AddChannelForm extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: 'createChannel',
-})(AddChannelForm);
+export default AddChannelForm;

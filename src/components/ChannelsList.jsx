@@ -1,5 +1,6 @@
 import React from 'react';
-import AddChannelForm from '../modals/AddChannelForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AddChannelForm from './AddChannelForm';
 import connect from '../connect';
 
 @connect()
@@ -10,11 +11,29 @@ class ChannelsList extends React.Component {
     setActiveChannel(id);
   }
 
+  handleDeleteChannel = id => async () => {
+    const { deleteChannelRequest } = this.props;
+    await deleteChannelRequest(id);
+  }
+
+  handleRenameChannel = id => async () => {
+    const { renameChannelRequest } = this.props;
+    await renameChannelRequest(id);
+  }
+
   renderChannels = channels => (
-    channels.map(({ id, name }) => (
-      <button key={id} type="button" className="btn btn-secondary btn-block" onClick={this.handleSetActiveChannel(id)}>
-        {`#${name}`}
-      </button>
+    channels.map(({ id, name, removable }) => (
+      <div key={id} className="row justify-content-between">
+        <div className="col-4">
+          <button type="button" className="btn btn-secondary" onClick={this.handleSetActiveChannel(id)}>
+            {`#${name}`}
+          </button>
+        </div>
+        <div className="col-5 my-auto">
+          <button type="button" disabled={!removable} className="btn btn-secondary p-1" onClick={removable && this.handleDeleteChannel(id)}><FontAwesomeIcon icon="trash" /></button>
+          <button type="button" disabled={!removable} className="btn btn-secondary p-1" onClick={this.handleDeleteChannel(id)}><FontAwesomeIcon icon="edit" /></button>
+        </div>
+      </div>
     ))
   );
 
@@ -23,10 +42,10 @@ class ChannelsList extends React.Component {
     return (
       <div className="px-3 bg-secondary text-white">
         <div className="team_menu">
-          <button className="btn btn-secondary btn-block m-0" type="button">
+          <button className="btn btn-secondary btn-block mb-5 m-0" type="button">
             Team menu
           </button>
-          <p className="m-0">{user}</p>
+          <p className="m-0 text-center">{user}</p>
         </div>
         <div className="col_channels center">
           <h3>Channels</h3>

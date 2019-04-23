@@ -11,10 +11,15 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { keyBy } from 'lodash';
 import reducers from './reducers';
 import App from './components/App';
 import Context from './context';
 import * as actions from './actions';
+
+library.add(faTrash, faEdit);
 
 const getRandomUsername = () => {
   const name = faker.name.findName();
@@ -31,36 +36,35 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const renderDefaultStoreChannels = (channels) => {
-  const byId = channels.reduce((acc, val) => {
-    const { id, name, removable } = val;
-    return { ...acc, [id]: { id, name, removable } };
-  }, {});
-  const allIds = channels.map(({ id }) => id);
-  const channelsForStore = { byId, allIds };
-  return channelsForStore;
-};
-
+const renderDefaultStoreData = data => (
+  {
+    byId: keyBy(data, 'id'),
+    allIds: data.map(({ id }) => id),
+  }
+);
 const username = getName();
-const { channels } = gon;
-/* eslint-disable no-underscore-dangle */
+const { channels, messages, currentChannelId } = gon;
+
 const store = createStore(
   reducers, /* preloadedState, */
   {
-    channels: renderDefaultStoreChannels(channels),
-    messages: { byId: {}, allIds: [] },
-    currentChannelId: gon.currentChannelId,
+    channels: renderDefaultStoreData(channels),
+    messages: renderDefaultStoreData(messages),
+    currentChannelId,
   },
   composeWithDevTools(applyMiddleware(thunk)),
 );
 
 const socket = io();
+
 socket.on('newMessage', (payload) => {
   store.dispatch(actions.addMessage(payload));
-}); /*
-socket.on('createChannel', (payload) => {
+});
+
+socket.on('newChannel', (payload) => {
+  console.log(payload);
   store.dispatch(actions.addChannel(payload));
-}); */
+});
 
 /* eslint-enable */
 ReactDOM.render(
