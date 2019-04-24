@@ -25,7 +25,7 @@ export const sendMessage = (message, channelId, user) => async () => {
   await axios.post(path, { data });
 };
 
-export const createChannel = (name, removable = true) => async (dispatch) => {
+export const createChannel = (name, removable = true) => async () => {
   const path = channels();
   const data = {
     attributes: {
@@ -33,10 +33,7 @@ export const createChannel = (name, removable = true) => async (dispatch) => {
       removable,
     },
   };
-  await axios.post(path, { data }); /*
-  const response = await axios.post(path, { data });
-  const { data: { data: attributes } } = response;
-  dispatch(addChannel(attributes)); */
+  await axios.post(path, { data });
 };
 export const renameChannelRequest = (newName, channelId) => async (dispatch) => {
   const path = channel(channelId);

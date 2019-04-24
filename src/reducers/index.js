@@ -68,7 +68,7 @@ const currentChannelId = handleActions({
   },
   [actions.deleteChannel](state, { payload }) {
     return state === payload ? 1 : state;
-  }
+  },
 }, 1);
 
 const modalError = handleActions({
