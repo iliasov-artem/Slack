@@ -22,7 +22,7 @@ class SendMessageForm extends React.Component {
     }
     reset();
   }
-
+/*
   renderInput = (field) => {
     console.log(1);
     return (
@@ -31,7 +31,7 @@ class SendMessageForm extends React.Component {
       </form>
     );
   }
-
+*/
   render() {
     const { handleSubmit, submitting } = this.props;
     return (

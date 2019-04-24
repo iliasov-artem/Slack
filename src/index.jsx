@@ -62,7 +62,7 @@ socket.on('newMessage', (payload) => {
 });
 
 socket.on('newChannel', (payload) => {
-  console.log(payload);
+  console.log('catch');
   store.dispatch(actions.addChannel(payload));
 });
 
