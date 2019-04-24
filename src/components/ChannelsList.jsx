@@ -30,7 +30,7 @@ class ChannelsList extends React.Component {
           </button>
         </div>
         <div className="col-5 my-auto">
-          <button type="button" disabled={!removable} className="btn btn-secondary p-1" onClick={removable && this.handleDeleteChannel(id)}><FontAwesomeIcon icon="trash" /></button>
+          <button type="button" disabled={!removable} className="btn btn-secondary p-1" onClick={this.handleDeleteChannel(id)}><FontAwesomeIcon icon="trash" /></button>
           <button type="button" disabled={!removable} className="btn btn-secondary p-1" onClick={this.handleDeleteChannel(id)}><FontAwesomeIcon icon="edit" /></button>
         </div>
       </div>
@@ -41,8 +41,8 @@ class ChannelsList extends React.Component {
     const { channels, user } = this.props;
     return (
       <div className="px-3 bg-secondary text-white">
-        <div className="team_menu">
-          <button className="btn btn-secondary btn-block mb-5 m-0" type="button">
+        <div className="team_menu mb-5">
+          <button className="btn btn-secondary btn-block m-0" type="button">
             Team menu
           </button>
           <p className="m-0 text-center">{user}</p>

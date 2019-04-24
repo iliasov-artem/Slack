@@ -9,6 +9,7 @@ class SendMessageForm extends React.Component {
   sendMessage = async ({ message }) => {
     const {
       sendMessage,
+      showError,
       reset,
       currentChannelId,
       user,
@@ -16,9 +17,19 @@ class SendMessageForm extends React.Component {
     try {
       await sendMessage(message, currentChannelId, user);
     } catch (e) {
-      console.log(e);
+      showError(e);
+      throw new Error(`${e.name}: ${e.message}`);
     }
     reset();
+  }
+
+  renderInput = (field) => {
+    console.log(1);
+    return (
+      <form>
+        <input type="text" />
+      </form>
+    );
   }
 
   render() {

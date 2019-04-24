@@ -12,6 +12,14 @@ const channels = handleActions({
       allIds: [...state.allIds, id],
     };
   },
+  [actions.renameChannel](state, { payload }) {
+    const { channelId, newName } = payload;
+    const renamedChannel = { ...state.byId[channelId], name: newName };
+    return {
+      byId: { ...state.byId, [channelId]: renamedChannel },
+      allIds: state.allIds,
+    };
+  },
   [actions.deleteChannel](state, { payload }) {
     return {
       byId: _.omit(state.byId, payload),
@@ -45,9 +53,20 @@ const currentChannelId = handleActions({
   },
 }, 1);
 
+const modalError = handleActions({
+  [actions.showError](state, { payload }) {
+    const errorMesage = `${payload.name}: ${payload.message}`;
+    return { visible: true, error: errorMesage };
+  },
+  [actions.hideError]() {
+    return { visible: false, error: '' };
+  },
+}, { visible: false, error: '' });
+
 export default combineReducers({
   channels,
   messages,
   currentChannelId,
+  modalError,
   form: formReducer,
 });
