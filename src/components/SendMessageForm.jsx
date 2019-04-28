@@ -6,7 +6,7 @@ import connect from '../connect';
 @connect()
 
 class SendMessageForm extends React.Component {
-  sendMessage = async ({ message }) => {
+  sendMessage = ({ message }) => {
     const {
       sendMessage,
       showError,
@@ -15,32 +15,23 @@ class SendMessageForm extends React.Component {
       user,
     } = this.props;
     try {
-      await sendMessage(message, currentChannelId, user);
+      sendMessage(message, currentChannelId, user);
     } catch (e) {
       showError(e);
       throw new Error(`${e.name}: ${e.message}`);
     }
     reset();
   }
-/*
-  renderInput = (field) => {
-    console.log(1);
-    return (
-      <form>
-        <input type="text" />
-      </form>
-    );
-  }
-*/
+
   render() {
     const { handleSubmit, submitting } = this.props;
     return (
       <div className="container-fluid">
         <form className="form" onSubmit={handleSubmit(this.sendMessage)}>
           <div className="input-group mb-3">
-            <Field name="message" placeholder="message" component="input" type="text" />
+            <Field className="col" name="message" placeholder="message" component="input" required type="text" />
             <div className="input-group-append">
-              <button className="btn btn-outline-secondary" disabled={submitting} type="submit">Button</button>
+              <button className="btn btn-outline-secondary" disabled={submitting} type="submit">Send</button>
             </div>
           </div>
         </form>

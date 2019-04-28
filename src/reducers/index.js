@@ -4,14 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 import _ from 'lodash';
 import * as actions from '../actions';
 
-const channels = handleActions({ /*
-  [actions.addChannel](state, { payload: { attributes } }) {
-    const { id, name, removable } = attributes;
-    return {
-      byId: { ...state.byId, [id]: { id, name, removable } },
-      allIds: [...state.allIds, id],
-    };
-  }, */
+const channels = handleActions({
   [actions.addChannel](state, { payload }) {
     const { data: { attributes: { id, name, removable } } } = payload;
     return {
@@ -20,10 +13,10 @@ const channels = handleActions({ /*
     };
   },
   [actions.renameChannel](state, { payload }) {
-    const { channelId, newName } = payload;
-    const renamedChannel = { ...state.byId[channelId], name: newName };
+    const { data: { attributes: { id, name } } } = payload;
+    const renamedChannel = { ...state.byId[id], name };
     return {
-      byId: { ...state.byId, [channelId]: renamedChannel },
+      byId: { ...state.byId, [id]: renamedChannel },
       allIds: state.allIds,
     };
   },
@@ -81,10 +74,26 @@ const modalError = handleActions({
   },
 }, { visible: false, error: '' });
 
+const modalDialog = handleActions({
+  [actions.showDialog](state, { payload }) {
+    const { channelId, type, channelName } = payload;
+    return {
+      visible: true,
+      type,
+      channelId,
+      channelName,
+    };
+  },
+  [actions.hideDialog]() {
+    return { visible: false, type: null };
+  },
+}, { visible: false, type: null });
+
 export default combineReducers({
   channels,
   messages,
   currentChannelId,
   modalError,
+  modalDialog,
   form: formReducer,
 });

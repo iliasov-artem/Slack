@@ -62,8 +62,16 @@ socket.on('newMessage', (payload) => {
 });
 
 socket.on('newChannel', (payload) => {
-  console.log('catch');
   store.dispatch(actions.addChannel(payload));
+});
+
+socket.on('renameChannel', (payload) => {
+  store.dispatch(actions.renameChannel(payload));
+});
+
+socket.on('deleteChannel', (payload) => {
+  console.log('catch');
+  store.dispatch(actions.deleteChannel(payload));
 });
 
 /* eslint-enable */

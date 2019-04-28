@@ -7,11 +7,23 @@ export const renameChannel = createAction('CHANNEL_RENAME');
 export const deleteChannel = createAction('CHANNEL_DELETE');
 export const addMessage = createAction('MESSAGE_ADD');
 export const setActiveChannel = createAction('SET_ACTIVE_CHANNEL');
+export const showDialog = createAction('DIALOG_SHOW');
+export const hideDialog = createAction('DIALOG_HIDE');
 
 export const deleteChannelRequest = channelId => async (dispatch) => {
   const path = channel(channelId);
   await axios.delete(path);
   dispatch(deleteChannel(channelId));
+};
+
+export const renameChannelRequest = (channelId, newName) => async () => {
+  const path = channel(channelId);
+  const data = {
+    attributes: {
+      name: newName,
+    },
+  };
+  await axios.patch(path, { data });
 };
 
 export const sendMessage = (message, channelId, user) => async () => {
@@ -25,7 +37,7 @@ export const sendMessage = (message, channelId, user) => async () => {
   await axios.post(path, { data });
 };
 
-export const createChannel = (name, removable = true) => async () => {
+export const addChannelRequest = (name, removable = true) => async () => {
   const path = channels();
   const data = {
     attributes: {
@@ -35,15 +47,6 @@ export const createChannel = (name, removable = true) => async () => {
   };
   await axios.post(path, { data });
 };
-export const renameChannelRequest = (newName, channelId) => async (dispatch) => {
-  const path = channel(channelId);
-  const data = {
-    attributes: {
-      name: newName,
-    },
-  };
-  await axios.patch(path, { data });
-  dispatch(renameChannel({ channelId, newName }));
-};
+
 export const showError = createAction('ERROR_SHOW');
 export const hideError = createAction('ERROR_HIDE');

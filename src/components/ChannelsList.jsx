@@ -1,7 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AddChannelForm from './AddChannelForm';
+import { Button } from 'react-bootstrap';
 import connect from '../connect';
+import ModalDialog from './modals/ModalDialog';
 
 @connect()
 
@@ -11,14 +12,19 @@ class ChannelsList extends React.Component {
     setActiveChannel(id);
   }
 
-  handleDeleteChannel = id => async () => {
-    const { deleteChannelRequest } = this.props;
-    await deleteChannelRequest(id);
+  handleDeleteChannel = (channelId, channelName) => () => {
+    const { showDialog } = this.props;
+    showDialog({ channelId, type: 'deleteChannel', channelName });
   }
 
-  handleRenameChannel = id => async () => {
-    const { renameChannelRequest } = this.props;
-    await renameChannelRequest(id);
+  handleRenameChannel = (channelId, channelName) => () => {
+    const { showDialog } = this.props;
+    showDialog({ channelId, type: 'renameChannel', channelName });
+  }
+
+  handleAddChannel = () => {
+    const { showDialog } = this.props;
+    showDialog({ type: 'addChannel' });
   }
 
   renderChannels = channels => (
@@ -30,8 +36,8 @@ class ChannelsList extends React.Component {
           </button>
         </div>
         <div className="col-5 my-auto">
-          <button type="button" disabled={!removable} className="btn btn-secondary p-1" onClick={this.handleDeleteChannel(id)}><FontAwesomeIcon icon="trash" /></button>
-          <button type="button" disabled={!removable} className="btn btn-secondary p-1" onClick={this.handleDeleteChannel(id)}><FontAwesomeIcon icon="edit" /></button>
+          <button type="button" disabled={!removable} className="btn btn-secondary p-1" onClick={this.handleDeleteChannel(id, name)}><FontAwesomeIcon icon="trash" /></button>
+          <button type="button" disabled={!removable} className="btn btn-secondary p-1" onClick={this.handleRenameChannel(id, name)}><FontAwesomeIcon icon="edit" /></button>
         </div>
       </div>
     ))
@@ -50,8 +56,11 @@ class ChannelsList extends React.Component {
         <div className="col_channels center">
           <h3>Channels</h3>
           {this.renderChannels(channels)}
-          <AddChannelForm />
+          <Button variant="primary" onClick={this.handleAddChannel}>
+            Add Channel
+          </Button>
         </div>
+        <ModalDialog />
       </div>
     );
   }
