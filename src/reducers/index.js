@@ -60,7 +60,8 @@ const currentChannelId = handleActions({
     return payload;
   },
   [actions.deleteChannel](state, { payload }) {
-    return state === payload ? 1 : state;
+    const defaultChannelId = 1;
+    return state === payload ? defaultChannelId : state;
   },
 }, 1);
 

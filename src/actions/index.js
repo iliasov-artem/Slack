@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
 import axios from 'axios';
-import { messages, channels, channel } from '../routes';
+import * as routes from '../routes';
 
 export const addChannel = createAction('CHANNEL_ADD');
 export const renameChannel = createAction('CHANNEL_RENAME');
@@ -11,13 +11,13 @@ export const showDialog = createAction('DIALOG_SHOW');
 export const hideDialog = createAction('DIALOG_HIDE');
 
 export const deleteChannelRequest = channelId => async (dispatch) => {
-  const path = channel(channelId);
+  const path = routes.channel(channelId);
   await axios.delete(path);
   dispatch(deleteChannel(channelId));
 };
 
 export const renameChannelRequest = (channelId, newName) => async () => {
-  const path = channel(channelId);
+  const path = routes.channel(channelId);
   const data = {
     attributes: {
       name: newName,
@@ -27,7 +27,7 @@ export const renameChannelRequest = (channelId, newName) => async () => {
 };
 
 export const sendMessage = (message, channelId, user) => async () => {
-  const path = messages(channelId);
+  const path = routes.messages(channelId);
   const data = {
     attributes: {
       message,
@@ -38,7 +38,7 @@ export const sendMessage = (message, channelId, user) => async () => {
 };
 
 export const addChannelRequest = (name, removable = true) => async () => {
-  const path = channels();
+  const path = routes.channels();
   const data = {
     attributes: {
       name,

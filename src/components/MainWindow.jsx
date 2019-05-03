@@ -38,7 +38,7 @@ class MainWindow extends React.Component {
           <div className="row flex-fill d-flex flex-column justify-content-start overflow-auto">
             <div className="col py-2 overflow-auto">
               <div className="message_box">
-                {currentMessages.length ? this.renderMessages(currentMessages) : null}
+                {currentMessages.length && this.renderMessages(currentMessages)}
               </div>
             </div>
             <Context.Consumer>
