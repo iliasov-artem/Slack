@@ -6,7 +6,7 @@ import connect from '../connect';
 @connect()
 
 class SendMessageForm extends React.Component {
-  sendMessage = ({ message }) => {
+  sendMessage = async ({ message }) => {
     const {
       sendMessage,
       showError,
@@ -15,7 +15,7 @@ class SendMessageForm extends React.Component {
       user,
     } = this.props;
     try {
-      sendMessage(message, currentChannelId, user);
+      await sendMessage(message, currentChannelId, user);
     } catch (e) {
       showError(e);
       throw new Error(`${e.name}: ${e.message}`);

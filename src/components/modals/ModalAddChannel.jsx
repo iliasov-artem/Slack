@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 @connect(mapStateToProps)
 
 class ModalAddChannel extends React.Component {
-  handleAdd = ({ newChannel }) => {
+  handleAdd = async ({ newChannel }) => {
     const {
       addChannelRequest,
       showError,
@@ -20,7 +20,7 @@ class ModalAddChannel extends React.Component {
     } = this.props;
     hideDialog();
     try {
-      addChannelRequest(newChannel);
+      await addChannelRequest(newChannel);
     } catch (e) {
       showError(e);
       throw new Error(`${e.name}: ${e.message}`);

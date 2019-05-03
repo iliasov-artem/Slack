@@ -14,16 +14,21 @@ const mapStateToProps = (state) => {
 @connect(mapStateToProps)
 
 class MainWindow extends React.Component {
-  renderMessages = messages => (
-    <div className="flex-column-reverse align-items-end overflow-auto">
-      {messages.map(({ id, message, user }) => (
-        <div className="mb-1" key={id} id={id}>
-          <span className="d-block"><strong>{user}</strong></span>
-          <span className="d-block">{message}</span>
-        </div>
-      ))}
-    </div>
-  );
+  renderMessages = (messages) => {
+    if (messages.length === 0) {
+      return null;
+    }
+    return (
+      <div className="flex-column-reverse align-items-end overflow-auto">
+        {messages.map(({ id, message, user }) => (
+          <div className="mb-1" key={id} id={id}>
+            <span className="d-block"><strong>{user}</strong></span>
+            <span className="d-block">{message}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   render() {
     const { currentMessages, currentChannelName, currentChannelId } = this.props;
@@ -37,9 +42,7 @@ class MainWindow extends React.Component {
           </div>
           <div className="row flex-fill d-flex flex-column justify-content-start overflow-auto">
             <div className="col py-2 overflow-auto">
-              <div className="message_box">
-                {currentMessages.length && this.renderMessages(currentMessages)}
-              </div>
+              {this.renderMessages(currentMessages)}
             </div>
             <Context.Consumer>
               {value => <SendMessageForm user={value} currentChannelId={currentChannelId} />}
