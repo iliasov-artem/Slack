@@ -10,20 +10,21 @@ const mapStateToProps = (state) => {
 
 
 class ModalDeleteChannel extends React.Component {
-  handleDelete = async () => {
+  handleDelete = async (event) => {
+    event.preventDefault();
     const {
       deleteChannelRequest,
       showError,
       hideDialog,
       channelIdToDelete,
     } = this.props;
-    hideDialog();
     try {
       await deleteChannelRequest(channelIdToDelete);
     } catch (e) {
       showError(e);
       throw new Error(`${e.name}: ${e.message}`);
     }
+    hideDialog();
   }
 
   handleClose = () => {

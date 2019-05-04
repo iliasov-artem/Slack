@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, SubmissionError } from 'redux-form';
 import connect from '../../connect';
 
 const mapStateToProps = (state) => {
@@ -18,13 +18,13 @@ class ModalAddChannel extends React.Component {
       hideDialog,
       reset,
     } = this.props;
-    hideDialog();
     try {
       await addChannelRequest(newChannel);
     } catch (e) {
       showError(e);
-      throw new Error(`${e.name}: ${e.message}`);
+      throw new SubmissionError(`${e.name}: ${e.message}`);
     }
+    hideDialog();
     reset();
   }
 

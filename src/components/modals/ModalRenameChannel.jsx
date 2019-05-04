@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, SubmissionError } from 'redux-form';
 import connect from '../../connect';
 
 const mapStateToProps = (state) => {
@@ -19,13 +19,13 @@ class ModalRenameChannel extends React.Component {
       channelIdToRename,
       reset,
     } = this.props;
-    hideDialog();
     try {
       await renameChannelRequest(channelIdToRename, newChannelName);
     } catch (e) {
       showError(e);
-      throw new Error(`${e.name}: ${e.message}`);
+      throw new SubmissionError(`${e.name}: ${e.message}`);
     }
+    hideDialog();
     reset();
   }
 
