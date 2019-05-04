@@ -1,5 +1,5 @@
 import React from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, SubmissionError } from 'redux-form';
 import connect from '../connect';
 
 @reduxForm({ form: 'newMessage' })
@@ -18,7 +18,7 @@ class SendMessageForm extends React.Component {
       await sendMessage(message, currentChannelId, user);
     } catch (e) {
       showError(e);
-      throw new Error(`${e.name}: ${e.message}`);
+      throw new SubmissionError(`${e.name}: ${e.message}`);
     }
     reset();
   }
